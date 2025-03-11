@@ -39,7 +39,7 @@
     <img src="https://cdn.displate.com/artwork/324x454/2025-01-03/d606f026-9f88-4d76-a538-0275ce35d20e.jpg" id="image" onload="loaded()">
     
 
-    <span id="result"></span>
+    <!-- <span id="result"></span> -->
 
     <script>
       function alertFun(){
@@ -78,9 +78,9 @@
       myBtn.addEventListener("mouseover", logEventType);
       myBtn.addEventListener("mouseout", logEventType);
 
-      const result = document.querySelector('#result');
-      result.innerHTML = '<h2>My Span</h2>';
-      result.style.color = 'blue';
+      let result = document.querySelector('#result');
+      //result.innerHTML = '<h2>My Span</h2>';
+      //result.style.color = 'blue';
 
       //exercise
       function loaded(){
@@ -89,6 +89,47 @@
       
       // let img = document.querySelector('#image');
       // img.addEventListener("load", logEventType);
+
+      let record = {
+        id: 1,
+        name: "bob's",
+        brewery_type: "fire",
+        website_url:"https://bobs.com"
+      }
+
+      function drawTable(records){
+        //add html code inside of result
+        let html = '';//create html string
+        for (let record of records){
+          //build html string
+          html += `<tr>
+          <td>${record.id}</td>
+          <td>${record.name}</td>
+          <td>${record.brewery_type}</td>`;
+          if (record.website_url === null){
+            html += `<td></td>`;
+          }
+          else
+            html += `<td>${record.website_url}</td>`;    
+          html += `</tr>`;
+        }
+        result.innerHTML = html;//add html string to DOM
+      }
+
+      //drawTable(record);
+
+      //function MUST be declared async
+      async function getData(url) {
+        try{
+          let response = await fetch(url);//1. Send http request and get response
+          let rsult = await response.json();//2. Get data from response
+          //console.log(rsult);
+          drawTable(rsult);//3. Do something with the data
+        }catch(e){
+          console.log(e);//catch and log any errors
+        }
+      }
+      getData("https://api.openbrewerydb.org/breweries/search?query=harry");
 
     </script>
     <script src="script.js"></script>

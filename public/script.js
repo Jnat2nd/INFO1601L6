@@ -33,3 +33,4 @@ Object.assign(obj3, myobj);
 obj3.name = 'Smith';
 
 console.log(myobj.name, obj3.name);
+
